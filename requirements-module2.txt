@@ -1,0 +1,11 @@
+﻿# Member 3 scope only. Member 4 merges into requirements.txt.
+torch==2.4.*
+torchvision==0.19.*
+open_clip_torch==2.24.*
+Pillow>=10.0.0
+numpy>=1.26,<2.0
+scikit-image>=0.22.0
+fastapi>=0.110.0
+uvicorn>=0.29.0
+python-multipart>=0.0.9
+pytest>=8.0.0
