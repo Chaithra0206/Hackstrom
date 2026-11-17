@@ -13,10 +13,8 @@ def cloak_image(image_bytes: bytes, epsilon: float = 8/255, steps: int = 8, mode
     model.eval()
     
     img_pil = Image.open(io.BytesIO(image_bytes)).convert('RGB')
-    
-    # Proper tensor conversion [0, 1]
     img_np = np.array(img_pil).astype(np.float32) / 255.0
-    img_tensor = torch.from_numpy(img_np).permute(2, 0, 1).unsqueeze(0).to(device)
+    orig_tensor = torch.from_numpy(img_np).permute(2, 0, 1).unsqueeze(0).to(device)
     
     mean = torch.tensor([0.48145466, 0.4578275, 0.40821073], device=device).view(1, 3, 1, 1)
     std = torch.tensor([0.26862954, 0.26130258, 0.27577711], device=device).view(1, 3, 1, 1)
@@ -24,30 +22,38 @@ def cloak_image(image_bytes: bytes, epsilon: float = 8/255, steps: int = 8, mode
     def normalize(t):
         return (t - mean) / std
         
+    # 1. Get original AI embedding (downscaled to 224)
+    img_224 = F.interpolate(orig_tensor, size=(224, 224), mode='bilinear', align_corners=False)
     with torch.no_grad():
-        orig_emb = F.normalize(model.encode_image(normalize(img_tensor)), dim=-1)
+        orig_emb = F.normalize(model.encode_image(normalize(img_224)), dim=-1)
         
-    adv_tensor = img_tensor.clone().detach()
+    # 2. Attack the High-Res image directly
+    adv_tensor = orig_tensor.clone().detach().requires_grad_(True)
     alpha = epsilon / 4.0
     
     for i in range(steps):
-        adv_tensor.requires_grad_(True)
-        adv_emb = F.normalize(model.encode_image(normalize(adv_tensor)), dim=-1)
-        loss = torch.cosine_similarity(orig_emb, adv_emb).mean()
+        # Downscale for the AI to evaluate
+        adv_224 = F.interpolate(adv_tensor, size=(224, 224), mode='bilinear', align_corners=False)
+        adv_emb = F.normalize(model.encode_image(normalize(adv_224)), dim=-1)
+        
+        # We WANT to minimize cosine similarity, so we maximize the negative similarity
+        loss = -torch.cosine_similarity(orig_emb, adv_emb).mean()
         model.zero_grad()
         loss.backward()
         
         with torch.no_grad():
-            # Update and clamp strictly in the [0, 1] pixel space
+            # Add gradient to maximize the loss (minimize the similarity)
             adv_tensor = adv_tensor + alpha * adv_tensor.grad.sign()
-            delta = torch.clamp(adv_tensor - img_tensor, min=-epsilon, max=epsilon)
-            adv_tensor = torch.clamp(img_tensor + delta, min=0.0, max=1.0).detach()
+            delta = torch.clamp(adv_tensor - orig_tensor, min=-epsilon, max=epsilon)
+            adv_tensor = torch.clamp(orig_tensor + delta, min=0.0, max=1.0).detach().requires_grad_(True)
             
     with torch.no_grad():
-        adv_emb = F.normalize(model.encode_image(normalize(adv_tensor)), dim=-1)
+        # 3. Verify the final AI confusion
+        adv_224 = F.interpolate(adv_tensor, size=(224, 224), mode='bilinear', align_corners=False)
+        adv_emb = F.normalize(model.encode_image(normalize(adv_224)), dim=-1)
         cos_after = torch.cosine_similarity(orig_emb, adv_emb).item()
         
-    adv_img = adv_tensor.squeeze(0).cpu().numpy()
+    adv_img = adv_tensor.squeeze(0).cpu().detach().numpy()
     adv_img = np.transpose(adv_img, (1, 2, 0))
     adv_img = np.clip(adv_img * 255.0, 0, 255).astype(np.uint8)
     
