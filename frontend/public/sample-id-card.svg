@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 856 540" width="856" height="540" role="img" aria-label="Mock student and national identity card">
+  <defs>
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="60%" stop-color="#eff6ff" />
+      <stop offset="100%" stop-color="#e0f2fe" />
+    </linearGradient>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="65%" stop-color="#1e3a8a" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <linearGradient id="chipGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fcd34d" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+    <pattern id="microGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#0284c7" fill-opacity="0.08" />
+    </pattern>
+  </defs>
+
+  <!-- Outer Card -->
+  <rect x="16" y="16" width="824" height="508" rx="28" fill="url(#cardBg)" stroke="#cbd5e1" stroke-width="3" />
+  <rect x="16" y="16" width="824" height="508" rx="28" fill="url(#microGrid)" />
+
+  <!-- Top Header Banner -->
+  <path d="M16 44 C16 28.5 28.5 16 44 16 L812 16 C827.5 16 840 28.5 840 44 L840 112 L16 112 Z" fill="url(#headerGrad)" />
+
+  <!-- Emblem Circle -->
+  <circle cx="76" cy="64" r="28" fill="#ffffff" fill-opacity="0.14" stroke="#38bdf8" stroke-width="2" />
+  <polygon points="76,44 82,58 96,64 82,70 76,84 70,70 56,64 70,58" fill="#38bdf8" />
+
+  <!-- Header Titles -->
+  <text x="122" y="58" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="22" font-weight="700" fill="#ffffff" letter-spacing="1.2">
+    NATIONAL &amp; ACADEMIC IDENTITY CARD
+  </text>
+  <text x="122" y="84" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="500" fill="#bae6fd" letter-spacing="2">
+    VERIFIED DIGITAL CREDENTIAL • SAMPLE DEMO
+  </text>
+
+  <!-- Status Badge -->
+  <rect x="692" y="46" width="118" height="34" rx="17" fill="#10b981" fill-opacity="0.2" stroke="#34d399" stroke-width="1.5" />
+  <circle cx="712" cy="63" r="5" fill="#34d399" />
+  <text x="725" y="68" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="700" fill="#ecfdf5">
+    VERIFIED
+  </text>
+
+  <!-- Photo Box -->
+  <rect x="52" y="144" width="186" height="226" rx="16" fill="#dbeafe" stroke="#93c5fd" stroke-width="2" />
+  <!-- Stylized silhouette inside photo -->
+  <circle cx="145" cy="222" r="42" fill="#1e3a8a" fill-opacity="0.85" />
+  <path d="M84 352 C88 292, 118 274, 145 274 C172 274, 202 292, 206 352 Z" fill="#1e3a8a" fill-opacity="0.85" />
+  <text x="145" y="394" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="600" fill="#475569">
+    PHOTOGRAPH
+  </text>
+
+  <!-- Smart Chip -->
+  <rect x="276" y="146" width="66" height="48" rx="8" fill="url(#chipGrad)" stroke="#b45309" stroke-width="1.5" />
+  <line x1="276" y1="162" x2="342" y2="162" stroke="#92400e" stroke-width="1.2" />
+  <line x1="276" y1="178" x2="342" y2="178" stroke="#92400e" stroke-width="1.2" />
+  <line x1="298" y1="146" x2="298" y2="194" stroke="#92400e" stroke-width="1.2" />
+  <line x1="320" y1="146" x2="320" y2="194" stroke="#92400e" stroke-width="1.2" />
+
+  <!-- Holder Details -->
+  <text x="276" y="232" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="700" fill="#64748b" letter-spacing="1.4">
+    FULL NAME
+  </text>
+  <text x="276" y="264" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="30" font-weight="700" fill="#0f172a">
+    Ananya Rao
+  </text>
+
+  <text x="276" y="308" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="700" fill="#64748b" letter-spacing="1.4">
+    DATE OF BIRTH (DOB)
+  </text>
+  <text x="276" y="336" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" font-weight="700" fill="#0f172a">
+    14-08-2004
+  </text>
+
+  <text x="530" y="308" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="700" fill="#64748b" letter-spacing="1.4">
+    ID NUMBER
+  </text>
+  <text x="530" y="336" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" font-weight="700" fill="#1d4ed8">
+    ID-8842-9910
+  </text>
+
+  <!-- Secondary Metadata Row -->
+  <line x1="276" y1="364" x2="800" y2="364" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="276" y="392" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="600" fill="#64748b">
+    ISSUING AUTHORITY: CENTRAL REGISTRAR • VALIDITY: 2024 – 2029
+  </text>
+
+  <!-- Bottom MRZ / Barcode Strip -->
+  <rect x="40" y="424" width="776" height="72" rx="12" fill="#0f172a" fill-opacity="0.05" stroke="#cbd5e1" stroke-width="1" />
+  <text x="64" y="454" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16" font-weight="600" fill="#334155" letter-spacing="2">
+    IDIND88429910&lt;&lt;RAO&lt;&lt;ANANYA&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
+  </text>
+  <text x="64" y="479" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16" font-weight="600" fill="#334155" letter-spacing="2">
+    20040814F290814IND&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;04
+  </text>
+</svg>
+
