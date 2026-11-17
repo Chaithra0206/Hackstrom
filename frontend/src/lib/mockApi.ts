@@ -1,6 +1,7 @@
 import type {
   ProtectSocialResponse,
   SafeAgentChatResponse,
+  SanitizeResponse,
   VerifyWatermarkResponse,
 } from "@/types/api";
 
@@ -204,4 +205,29 @@ export async function mockSafeAgentChat(
 
   return response;
 }
+
+export async function mockSanitizeImage(
+  imageBase64: string
+): Promise<SanitizeResponse> {
+  await delay(SIMULATED_DELAY_MS);
+  const sanitizedImage = await redactImageWithCanvas(imageBase64);
+  return {
+    sanitized_image_base64: sanitizedImage,
+    audit: {
+      exif_stripped: true,
+      gps_removed: true,
+      faces_redacted: 1,
+      ids_redacted: ["AADHAAR", "PAN"],
+      detected_entities: ["FACE_1", "[AADHAAR_REDACTED]", "GPS_EXIF"],
+      stripped_metadata: {
+        GPS: "Detected & Stripped (Tag 0x8825)",
+        Device: "Pixel 9 Pro",
+        Timestamp: "2026-11-18T02:30:00Z",
+      },
+      processing_time_ms: 180,
+    },
+    status: "success",
+  };
+}
+
 

@@ -32,3 +32,20 @@ export interface SafeAgentChatResponse {
   };
 }
 
+export interface SanitizeAudit {
+  exif_stripped: boolean;
+  gps_removed: boolean;
+  faces_redacted: number;
+  ids_redacted: string[];
+  detected_entities: string[];
+  stripped_metadata: Record<string, string>;
+  processing_time_ms: number;
+}
+
+export interface SanitizeResponse {
+  sanitized_image_base64: string;
+  audit: SanitizeAudit;
+  status: string;
+}
+
+
